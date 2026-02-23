@@ -92,6 +92,7 @@ export interface Project {
 
     // Contenu
     content?: string;
+    videoDemo?: string;
 
     // Metadata
     featured: boolean;

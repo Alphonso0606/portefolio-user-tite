@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, FileText } from 'lucide-react';
 import { personal } from '@/data/personal';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
     { href: '#about', label: 'À propos' },
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -25,6 +27,10 @@ export default function Header() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Cache le header sur les pages détail de projet (après les hooks)
+    const isProjectDetail = pathname.startsWith('/projects/') && pathname !== '/projects';
+    if (isProjectDetail) return null;
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -50,9 +56,9 @@ export default function Header() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-            <span className="hidden sm:inline">
-              {personal.name.split(' ').slice(-1)[0]}
-            </span>
+                        <span className="hidden sm:inline">
+                            {personal.name.split(' ').slice(-1)[0]}
+                        </span>
                         <span className="sm:hidden">KKT</span>
                     </motion.a>
 

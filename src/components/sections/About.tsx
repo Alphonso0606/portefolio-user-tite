@@ -39,7 +39,7 @@ export default function About() {
                                 <div className="relative">
                                     <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary-400 to-blue-600 shadow-2xl relative">
                                         <Image
-                                            src="/images/profile.jpg"
+                                            src="/images/profile.png"
                                             alt={personal.name}
                                             fill
                                             className="object-cover"

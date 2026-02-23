@@ -10,14 +10,14 @@ export const personal = {
     full: "Fès, Maroc"
   },
   contact: {
-    email: "kouakoukouassitite@gmail.com",
+    email: "titikouassi18@gmail.com",
     phone: {
       morocco: "+212 772-816982",
       ivoryCoast: "+225 544-433203"
     },
     linkedin: "https://www.linkedin.com/in/kouassi-tite-kouakou-46702a343"
   },
-  bio: "Étudiant ingénieur en génie civil, motivé et passionné, je cherche à concrétiser mes connaissances théoriques en pratique à travers des stages et projets innovants. Spécialisé en conception structurelle et modélisation 3D.",
+  bio: "Technicien supérieur en génie civil, option bâtiment, et élève ingénieur en quatrième année du cycle d’ingénieur d’État, je suis passionné par la modélisation et l’analyse des structures à l’aide du BIM. Fort d’une expérience dans le secteur du BTP, je suis actuellement à la recherche d’un stage de fin d’année (PFA) afin de renforcer mes compétences, notamment en sécurité, et d’approfondir mes connaissances au sein d’un bureau d’études techniques.",
   interests: ["Football", "Lecture", "Musique"],
   languages: [
     { name: "Français", level: "Courant" },

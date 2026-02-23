@@ -1,62 +1,176 @@
 import { Project } from '@/types';
 
 /**
- * Données des projets
- * À remplacer par vos vrais projets avec images
+ * Données des projets réels
  */
 
 export const projects: Project[] = [
     {
         id: '1',
-        slug: 'villa-duplex-haut-standing',
-        title: 'Villa Duplex de Haut Standing',
-        description: 'Construction et supervision complète d\'une villa duplex moderne avec finitions luxueuses. Coordination de tous les corps de métiers et respect strict des délais.',
-        category: 'building',
-        location: 'Fès, Maroc',
-        year: 2024,
-        client: 'Client Privé',
-        thumbnail: '/images/projects/villa-duplex-thumb.jpg',
+        slug: 'batiment-r5-sous-sol',
+        title: 'Étude Complète Bâtiment R+5 + Sous-sol',
+        description: 'Modélisation 3D, descente de charges (BAEL 91 modifié 99), analyse modale et ferraillage. Contreventement mixte (portiques + voiles) sur radier général.',
+        category: 'study',
+        location: 'Projet Académique',
+        year: 2025,
+        client: 'Université Privée de Fès',
+        thumbnail: '/images/projects/CAPTURE_R_5/batiment-r5-thumb.png',
         images: [
-            '/images/projects/villa-duplex-1.jpg',
-            '/images/projects/villa-duplex-2.jpg',
-            '/images/projects/villa-duplex-3.jpg',
+            '/images/projects/CAPTURE_R_5/batiment-r5-thumb.png',
+            '/images/projects/CAPTURE_R_5/CAPT%20POTEAU.png',
+            '/images/projects/CAPTURE_R_5/Capture%20BLM.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-19%20234028.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-23%20225952.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-23%20230809.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-23%20235856.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-24%20222809.png',
+            '/images/projects/CAPTURE_R_5/Capture%20d%27%C3%A9cran%202026-01-24%20223342.png',
+            '/images/projects/CAPTURE_R_5/Capture%20ecran05.png',
+            '/images/projects/CAPTURE_R_5/Capture%20fe.png',
+            '/images/projects/CAPTURE_R_5/Capture%20MOMENTS.png',
+            '/images/projects/CAPTURE_R_5/Capture%20poutre%20ferr.png',
+            '/images/projects/CAPTURE_R_5/Capture%20%20VENT.png',
         ],
-        model3D: '/models/villa-duplex.glb',
-        surface: 350,
-        duration: 5,
-        team: 8,
+        model3D: '/models/batiment-r5.glb',
+        videoDemo: '/videos/CAPTURE_R_5/batiment-r5-demo.mp4',
         skills: [
-            'Suivi de chantier',
-            'Coordination technique',
-            'Contrôle qualité',
-            'Gestion de planning'
+            'Modélisation 3D',
+            'Descente de charges BAEL 91/99',
+            'Analyse modale',
+            'Ferraillage optimisé',
+            'Contreventement mixte',
+            'Radier général'
         ],
-        software: ['AutoCAD', 'REVIT', 'Excel', 'MS Project'],
+        software: ['Robot Structural Analysis', 'AutoCAD', 'Excel', 'REVIT'],
         content: `
 ## Description du projet
 
-Construction d'une villa duplex moderne avec des standards élevés de qualité et de finition. 
-Le projet incluait la supervision complète depuis les fondations jusqu'aux finitions.
+Étude structurelle complète d'un bâtiment R+5 avec sous-sol, illustrant la maîtrise du workflow complet depuis la conception jusqu'aux plans de ferraillage détaillés.
+
+### Caractéristiques techniques
+
+- **Structure** : Contreventement mixte (portiques + voiles)
+- **Fondations** : Radier général
+- **Normes** : BAEL 91 modifié 99
+- **Analyse** : Modale et dynamique
 
 ### Missions réalisées
 
-- Suivi quotidien de l'avancement des travaux
-- Coordination entre les différents corps de métiers (maçonnerie, électricité, plomberie, finitions)
-- Contrôle de la conformité aux plans et spécifications techniques
-- Gestion du planning et respect des délais contractuels
-- Reporting régulier au maître d'ouvrage
+- Modélisation 3D complète de la structure
+- Descente de charges selon BAEL 91 modifié 99
+- Analyse modale pour vérification sismique
+- Dimensionnement et ferraillage de tous les éléments
+- Plans de ferraillage détaillés
+- Vérification de la constructibilité
 
-### Défis relevés
+### Points clés
 
-- Coordination de 8 entreprises sous-traitantes simultanément
-- Adaptation aux modifications clients en cours de chantier
-- Respect du budget tout en maintenant la qualité premium
+Un projet qui démontre une approche méthodique et rigoureuse, avec un regard critique sur la constructibilité et l'optimisation des solutions structurelles.
+
+### Compétences développées
+
+- Maîtrise avancée de Robot Structural Analysis
+- Compréhension approfondie du BAEL 91/99
+- Analyse et interprétation des résultats
+- Optimisation du ferraillage
+- Production de livrables professionnels
     `,
         featured: true,
-        publishedAt: new Date('2024-07-15'),
+        publishedAt: new Date('2025-01-15'),
     },
     {
         id: '2',
+        slug: 'reservoir-eau-intelligent',
+        title: 'Réservoir d\'Eau Intelligent pour Irrigation',
+        description: 'Conception d\'un réservoir circulaire semi-enterré de 2 513 m³ (Ø20m, H8m). Étude complète avec analyse hydrostatique, vérification géotechnique et ferraillage optimisé BAEL 91/99.',
+        category: 'infrastructure',
+        location: 'Projet Académique',
+        year: 2025,
+        client: 'Université Privée de Fès',
+        thumbnail: '/images/projects/CAPTURE_RESERVOIRS/reservoir-1.png',
+        images: [
+            '/images/projects/CAPTURE_RESERVOIRS/reservoir-1.png',
+            '/images/projects/CAPTURE_RESERVOIRS/3D%20CHARGE%203.png',
+            '/images/projects/CAPTURE_RESERVOIRS/11.png',
+            '/images/projects/CAPTURE_RESERVOIRS/APPLI%20HYDRO%204.png',
+            '/images/projects/CAPTURE_RESERVOIRS/avec%20epaisseur.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-26%20233128.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20000643.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20170959.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20180734.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20190233.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20190744.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20190937.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Capture%20d%27%C3%A9cran%202026-01-27%20200916.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Contrainte%20els.png',
+            '/images/projects/CAPTURE_RESERVOIRS/CONTRAINTE%20SOL.png',
+            '/images/projects/CAPTURE_RESERVOIRS/effort%20de%20membre%20.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Effort%20de%20traction%20xx.png',
+            '/images/projects/CAPTURE_RESERVOIRS/effort%20max%20voile.png',
+            '/images/projects/CAPTURE_RESERVOIRS/effort%20membre%20dans%20ladirection%20des%20xx.png',
+            '/images/projects/CAPTURE_RESERVOIRS/flexion%20simple.png',
+            '/images/projects/CAPTURE_RESERVOIRS/Maillage.png',
+            '/images/projects/CAPTURE_RESERVOIRS/PRESSION%20EN%20BAS%20HYDRO.png',
+            '/images/projects/CAPTURE_RESERVOIRS/PRESSION%20HYDRO.png',
+            '/images/projects/CAPTURE_RESERVOIRS/REPERE%20LOCAL.png',
+            '/images/projects/CAPTURE_RESERVOIRS/YYDRO%20SUR%20RADIER%205.png',
+        ],
+        model3D: '/models/CAPTURE_RESERVOIRS/reservoir.glb',
+        videoDemo: '/videos/CAPTURE_RESERVOIRS/reservoir-demo.mp4',
+        surface: 314,
+        skills: [
+            'Conception hydraulique',
+            'Analyse hydrostatique',
+            'Vérification géotechnique',
+            'Dimensionnement BAEL 91/99',
+            'Ferraillage optimisé',
+            'Gestion de l\'eau'
+        ],
+        software: ['Robot Structural Analysis', 'AutoCAD', 'Excel'],
+        content: `
+## Description du projet
+
+Conception complète d'un réservoir d'eau intelligent destiné à l'irrigation agricole. Structure circulaire semi-enterrée optimisée pour la durabilité et la performance.
+
+### Caractéristiques du réservoir
+
+- **Capacité** : 2 513 m³
+- **Diamètre** : 20 mètres
+- **Hauteur** : 8 mètres
+- **Type** : Circulaire semi-enterré
+- **Usage** : Irrigation intelligente
+
+### Études réalisées
+
+#### 1. Modélisation 3D
+- Modélisation complète de la structure
+- Intégration des équipements hydrauliques
+
+#### 2. Analyses structurelles
+- Efforts hydrostatiques (poussée de l'eau)
+- Vérification géotechnique (contrainte sol < 3 bars)
+- Dimensionnement selon BAEL 91/99
+
+#### 3. Ferraillage
+- Radier : ferraillage optimisé bi-directionnel
+- Voile circulaire : armatures circonférentielles et verticales
+- Coupole : ferraillage en réseau
+
+### Choix techniques
+
+- **Ferraillage manuel optimisé** pour économie et durabilité
+- **Structure monolithique** pour étanchéité maximale
+- **Conception parasismique** adaptée
+
+### Impact du projet
+
+Projet alliant durabilité, maîtrise technique et réponse concrète aux enjeux de gestion de l'eau en contexte agricole.
+    `,
+        featured: true,
+        publishedAt: new Date('2025-02-01'),
+    },
+    {
+        id: '3',
         slug: 'trace-routier-autopiste-17',
         title: 'Tracé Routier Autopiste 17',
         description: 'Étude et conception du tracé routier sur Covadis Autopiste 17. Analyse topographique, calculs de terrassement et élaboration des plans d\'exécution.',
@@ -64,10 +178,14 @@ Le projet incluait la supervision complète depuis les fondations jusqu'aux fini
         location: 'Région Fès-Meknès, Maroc',
         year: 2025,
         client: 'ESMOR - Bureau d\'Études',
-        thumbnail: '/images/projects/autopiste-17-thumb.jpg',
+        thumbnail: '/images/projects/Tracer_Routier/Tracer%20Routier%201.jpeg',
         images: [
-            '/images/projects/autopiste-17-1.jpg',
-            '/images/projects/autopiste-17-2.jpg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%201.jpeg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%202.jpeg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%203.jpeg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%204.jpeg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%205.jpeg',
+            '/images/projects/Tracer_Routier/Tracer%20Routier%206.jpeg',
         ],
         duration: 2,
         team: 4,
@@ -101,50 +219,7 @@ Utilisation de Covadis pour l'optimisation du tracé en plan et en profil.
         featured: true,
         publishedAt: new Date('2025-08-29'),
     },
-    {
-        id: '3',
-        slug: 'etude-structure-batiment-r2',
-        title: 'Étude de Structure - Bâtiment R+2',
-        description: 'Calcul et dimensionnement de la structure d\'un bâtiment résidentiel R+2. Modélisation sur Robot Structural Analysis et plans de ferraillage.',
-        category: 'study',
-        location: 'Fès, Maroc',
-        year: 2024,
-        thumbnail: '/images/projects/structure-r2-thumb.jpg',
-        images: [
-            '/images/projects/structure-r2-1.jpg',
-            '/images/projects/structure-r2-2.jpg',
-        ],
-        surface: 280,
-        skills: [
-            'Calcul de structures',
-            'Modélisation BIM',
-            'Ferraillage',
-            'Notes de calcul'
-        ],
-        software: ['Robot Structural Analysis', 'REVIT', 'AutoCAD', 'RDM6'],
-        content: `
-## Description du projet
 
-Projet académique de calcul complet d'une structure en béton armé pour un bâtiment R+2.
-Réalisation de la modélisation, calculs et plans d'exécution.
-
-### Livrables
-
-- Note de calcul détaillée
-- Modèle 3D de la structure
-- Plans de coffrage
-- Plans de ferraillage (semelles, poteaux, poutres, dalles)
-- Métrés et quantitatifs
-
-### Logiciels utilisés
-
-- Robot Structural Analysis pour l'analyse structurelle
-- REVIT pour la modélisation BIM
-- AutoCAD pour les plans 2D
-    `,
-        featured: false,
-        publishedAt: new Date('2024-06-01'),
-    },
 ];
 
 export const projectCategories = {

@@ -50,8 +50,8 @@ export const experiences: Experience[] = [
 export const education = [
     {
         degree: "Cycle Ingénieur en Génie Civil",
-        institution: "Université Privée de Fès",
-        year: "2023 - 2026 (En cours)",
+        institution: "Université Privée de Fès - (UPF)",
+        year: "2024 - 2026 (En cours)",
         current: true,
         level: "4ème année (2ème année cycle ingénieur)"
     },
