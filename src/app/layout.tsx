@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "./providers";
+import React from "react";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -16,6 +17,13 @@ export const metadata: Metadata = {
     description: "Portfolio de KOUAKOU Kouassi Tite, élève ingénieur en génie civil spécialisé en conception structurelle, modélisation BIM et tracé routier.",
     keywords: ["génie civil", "ingénieur", "BIM", "AutoCAD", "REVIT", "structure", "Fès"],
     authors: [{ name: "KOUAKOU Kouassi Tite" }],
+    icons: {
+        icon: [
+            { url: '/icon.svg', type: 'image/svg+xml' },
+        ],
+        shortcut: '/icon.svg',
+        apple: '/icon.svg',
+    },
     openGraph: {
         title: "KOUAKOU Kouassi Tite - Ingénieur Génie Civil",
         description: "Portfolio professionnel d'un ingénieur génie civil",

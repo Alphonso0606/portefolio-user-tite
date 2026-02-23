@@ -120,7 +120,7 @@ export default function Footer() {
                             © {currentYear} {personal.name}. Tous droits réservés.
                         </p>
                         <p className="text-sm text-slate-500">
-                            Conçu avec par Alphonse Sorel
+                            Conçu par Alphonse Sorel
                             {/*<span className="text-red-500">❤</span> et{' '}*/}
                             {/*<span className="text-primary-400">Next.js</span>*/}
                         </p>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, MapPin, Calendar, Briefcase, Users, Clock, Play, Box, ChevronLeft, ChevronRight, X, Home } from 'lucide-react';
 import Link from 'next/link';
@@ -63,6 +63,41 @@ function renderMarkdown(content: string): React.ReactNode[] {
     return elements;
 }
 
+// Composant Model3DViewer — injecte dynamiquement le script model-viewer
+// pour éviter l'erreur TypeScript au build
+function Model3DViewer({ src, title }: { src: string; title: string }) {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // Charge le script model-viewer une seule fois
+        if (!document.querySelector('script[data-model-viewer]')) {
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
+            script.setAttribute('data-model-viewer', 'true');
+            document.head.appendChild(script);
+        }
+
+        // Crée l'élément model-viewer dynamiquement
+        const container = containerRef.current;
+        if (!container) return;
+        container.innerHTML = '';
+        const viewer = document.createElement('model-viewer');
+        viewer.setAttribute('src', src);
+        viewer.setAttribute('alt', `Modèle 3D de ${title}`);
+        viewer.setAttribute('auto-rotate', '');
+        viewer.setAttribute('camera-controls', '');
+        viewer.style.width = '100%';
+        viewer.style.height = '100%';
+        viewer.style.background = 'transparent';
+        container.appendChild(viewer);
+
+        return () => { container.innerHTML = ''; };
+    }, [src, title]);
+
+    return <div ref={containerRef} className="w-full h-full" />;
+}
+
 export default function ProjectContent({ project }: ProjectContentProps) {
     const [selectedMedia, setSelectedMedia] = useState<'images' | '3d' | 'video'>('images');
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,7 +110,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
     const prevImage = () => setCurrentIndex((i) => (i - 1 + (images?.length ?? 1)) % (images?.length ?? 1));
     const nextImage = () => setCurrentIndex((i) => (i + 1) % (images?.length ?? 1));
 
-    // Scroll progress + isScrolled
     useEffect(() => {
         const handleScroll = () => {
             const scrollTop = window.scrollY;
@@ -103,8 +137,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
             >
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-14">
-
-                        {/* Retour */}
                         <Link
                             href="/#projects"
                             className="inline-flex items-center gap-2 text-slate-600 hover:text-primary-600 transition-colors group font-medium text-sm"
@@ -115,7 +147,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                             <span className="hidden sm:inline">Retour aux projets</span>
                         </Link>
 
-                        {/* Titre du projet (apparaît en scrollant) */}
                         <AnimatePresence>
                             {isScrolled && (
                                 <motion.p
@@ -129,7 +160,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                             )}
                         </AnimatePresence>
 
-                        {/* Accueil */}
                         <Link
                             href="/"
                             className="inline-flex items-center gap-2 text-slate-500 hover:text-primary-600 transition-colors group text-sm"
@@ -142,7 +172,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                     </div>
                 </div>
 
-                {/* Barre de progression de lecture */}
+                {/* Barre de progression */}
                 <div className="h-0.5 bg-slate-100">
                     <motion.div
                         className="h-full bg-primary-500 origin-left"
@@ -156,7 +186,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
             <div className="pt-14 pb-20">
                 <div className="container mx-auto px-4">
 
-                    {/* En-tête */}
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="pt-10 mb-12">
                         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">{project.title}</h1>
                         <p className="text-xl text-slate-600 mb-6">{project.description}</p>
@@ -240,24 +269,17 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                                     </>
                                 ) : (
                                     <div className="relative h-96 md:h-[600px] bg-gradient-to-br from-primary-100 to-blue-100 rounded-2xl overflow-hidden flex items-center justify-center">
-                                        <div className="text-center text-slate-500">
-                                            <p className="text-lg font-medium">Aucune image disponible</p>
-                                        </div>
+                                        <p className="text-slate-500 text-lg font-medium">Aucune image disponible</p>
                                     </div>
                                 )}
                             </div>
                         )}
 
+                        {/* ── MODÈLE 3D — chargé dynamiquement pour éviter l'erreur TS ── */}
                         {selectedMedia === '3d' && project.model3D && (
                             <div className="relative h-96 md:h-[600px] bg-slate-900 rounded-2xl overflow-hidden">
-                                <model-viewer
-                                    src={project.model3D}
-                                    alt={`Modèle 3D de ${project.title}`}
-                                    auto-rotate
-                                    camera-controls
-                                    style={{ width: '100%', height: '100%', background: 'transparent' }}
-                                />
-                                <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-xs">
+                                <Model3DViewer src={project.model3D} title={project.title} />
+                                <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-xs pointer-events-none">
                                     Glissez pour faire pivoter · Molette pour zoomer
                                 </p>
                             </div>
@@ -316,8 +338,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="max-w-none">
                                 {project.content ? renderMarkdown(project.content) : null}
                             </motion.div>
-
-                            {/* Bouton retour en bas de page */}
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-16 pt-8 border-t border-slate-200">
                                 <Link
                                     href="/#projects"
