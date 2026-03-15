@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Linkedin, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, MapPin, Send, Linkedin, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
 import { personal } from '@/data/personal';
 import emailjs from '@emailjs/browser';
 
@@ -19,6 +19,12 @@ export default function Contact() {
     });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const isFormFilled =
+        formData.name.trim() !== '' &&
+        formData.email.trim() !== '' &&
+        formData.subject.trim() !== '' &&
+        formData.message.trim() !== '';
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
@@ -239,45 +245,110 @@ export default function Contact() {
                             </div>
 
                             {/* Messages de statut */}
-                            {status === 'success' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="flex items-center gap-2 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200"
-                                >
-                                    <CheckCircle className="w-5 h-5 shrink-0" />
-                                    <span>Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.</span>
-                                </motion.div>
-                            )}
-
-                            {status === 'error' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200"
-                                >
-                                    <AlertCircle className="w-5 h-5 shrink-0" />
-                                    <span>{errorMessage}</span>
-                                </motion.div>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={status === 'sending'}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors shadow-lg shadow-primary-500/30"
-                            >
-                                {status === 'sending' ? (
-                                    <>
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                        Envoi en cours...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="w-5 h-5" />
-                                        Envoyer le message
-                                    </>
+                            <AnimatePresence>
+                                {status === 'success' && (
+                                    <motion.div
+                                        key="success"
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="flex items-center gap-2 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200"
+                                    >
+                                        <CheckCircle className="w-5 h-5 shrink-0" />
+                                        <span>Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.</span>
+                                    </motion.div>
                                 )}
-                            </button>
+                                {status === 'error' && (
+                                    <motion.div
+                                        key="error"
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200"
+                                    >
+                                        <AlertCircle className="w-5 h-5 shrink-0" />
+                                        <span>{errorMessage}</span>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* ✅ Bouton Envoyer intuitif */}
+                            <div className="space-y-2">
+                                <motion.button
+                                    type="submit"
+                                    disabled={status === 'sending' || !isFormFilled}
+                                    whileHover={isFormFilled && status !== 'sending' ? { scale: 1.02 } : {}}
+                                    whileTap={isFormFilled && status !== 'sending' ? { scale: 0.97 } : {}}
+                                    className={`
+                                        relative w-full flex items-center justify-center gap-3
+                                        px-6 py-4 rounded-xl font-semibold text-base
+                                        transition-all duration-300 overflow-hidden
+                                        ${isFormFilled && status !== 'sending'
+                                        ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-500/30 cursor-pointer'
+                                        : 'bg-slate-100 text-slate-400 shadow-none cursor-not-allowed border border-slate-200'
+                                    }
+                                    `}
+                                >
+                                    {/* Shimmer animé quand le formulaire est prêt */}
+                                    {isFormFilled && status !== 'sending' && (
+                                        <motion.span
+                                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 pointer-events-none"
+                                            initial={{ x: '-100%' }}
+                                            animate={{ x: '200%' }}
+                                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5 }}
+                                        />
+                                    )}
+
+                                    <AnimatePresence mode="wait">
+                                        {status === 'sending' ? (
+                                            <motion.span
+                                                key="sending"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="flex items-center gap-3"
+                                            >
+                                                <div className="w-5 h-5 border-2 border-slate-300 border-t-primary-500 rounded-full animate-spin" />
+                                                Envoi en cours...
+                                            </motion.span>
+                                        ) : (
+                                            <motion.span
+                                                key="idle"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="flex items-center gap-3"
+                                            >
+                                                <Send className="w-5 h-5" />
+                                                Envoyer le message
+                                                {isFormFilled && (
+                                                    <motion.span
+                                                        initial={{ x: -6, opacity: 0 }}
+                                                        animate={{ x: 0, opacity: 1 }}
+                                                        transition={{ duration: 0.25 }}
+                                                    >
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </motion.span>
+                                                )}
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.button>
+
+                                {/* Hint sous le bouton : guide l'utilisateur */}
+                                <AnimatePresence>
+                                    {!isFormFilled && status === 'idle' && (
+                                        <motion.p
+                                            initial={{ opacity: 0, y: -4 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -4 }}
+                                            className="text-xs text-slate-400 text-center"
+                                        >
+                                            Remplissez tous les champs pour activer l&#39;envoi
+                                        </motion.p>
+                                    )}
+                                </AnimatePresence>
+                            </div>
 
                             <p className="text-sm text-slate-500 text-center">
                                 Vous pouvez aussi me contacter directement par{' '}
