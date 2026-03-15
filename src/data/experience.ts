@@ -74,14 +74,14 @@ export const education = [
 
 export const associations = [
     {
-        role: "Président du Conseil Général",
-        organization: "Collectif des Étudiants Internationaux (CEI)",
-        period: "2024 - Présent"
+        role: "Président",
+        organization: "Collectif des Étudiants Internationaux (CEI) de L'université Privée de Fès",
+        period: "2025/2026"
     },
     {
-        role: "Vice-Président",
-        organization: "Club d'Intégration - Bureau des Étudiants (BDE)",
-        period: "2024"
+        role: "Secrétaire Général",
+        organization: "Collectif des Étudiants Internationaux (CEI) de L'université Privée de Fès ",
+        period: "2024/2025"
     }
 ];
 
