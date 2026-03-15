@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Linkedin, CheckCircle, AlertCircle } from 'lucide-react';
 import { personal } from '@/data/personal';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -28,18 +33,29 @@ export default function Contact() {
         setErrorMessage('');
 
         try {
-            // Simulation d'envoi (à remplacer par EmailJS ou API)
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                {
+                    from_name: formData.name,
+                    name: formData.name,
+                    email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                },
+                EMAILJS_PUBLIC_KEY
+            );
 
-            // Simuler succès
             setStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' });
-
-            // Réinitialiser après 5 secondes
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
+            console.error('EmailJS error:', error);
             setStatus('error');
-            setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
+            setErrorMessage(
+                "Une erreur est survenue. Veuillez réessayer ou me contacter directement par email."
+            );
+            setTimeout(() => setStatus('idle'), 5000);
         }
     };
 
@@ -64,6 +80,7 @@ export default function Contact() {
                 </motion.div>
 
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+
                     {/* Informations de contact */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -97,10 +114,16 @@ export default function Contact() {
                                     <div>
                                         <h4 className="font-semibold mb-1">Téléphone</h4>
                                         <div className="text-white/90">
-                                            <a href={`tel:${personal.contact.phone.morocco.replace(/\s/g, '')}`} className="block hover:text-white transition-colors">
+                                            <a
+                                                href={`tel:${personal.contact.phone.morocco.replace(/\s/g, '')}`}
+                                                className="block hover:text-white transition-colors"
+                                            >
                                                 {personal.contact.phone.morocco}
                                             </a>
-                                            <a href={`tel:${personal.contact.phone.ivoryCoast.replace(/\s/g, '')}`} className="block hover:text-white transition-colors">
+                                            <a
+                                                href={`tel:${personal.contact.phone.ivoryCoast.replace(/\s/g, '')}`}
+                                                className="block hover:text-white transition-colors"
+                                            >
                                                 {personal.contact.phone.ivoryCoast}
                                             </a>
                                         </div>
@@ -158,7 +181,8 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+                                    disabled={status === 'sending'}
+                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     placeholder="Votre nom"
                                 />
                             </div>
@@ -174,7 +198,8 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+                                    disabled={status === 'sending'}
+                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     placeholder="votre@email.com"
                                 />
                             </div>
@@ -190,7 +215,8 @@ export default function Contact() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+                                    disabled={status === 'sending'}
+                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     placeholder="Objet de votre message"
                                 />
                             </div>
@@ -206,30 +232,39 @@ export default function Contact() {
                                     onChange={handleChange}
                                     required
                                     rows={6}
-                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all resize-none"
+                                    disabled={status === 'sending'}
+                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                                     placeholder="Votre message..."
                                 />
                             </div>
 
                             {/* Messages de statut */}
                             {status === 'success' && (
-                                <div className="flex items-center gap-2 p-4 bg-green-50 text-green-700 rounded-lg">
-                                    <CheckCircle className="w-5 h-5" />
-                                    <span>Message envoyé avec succès !</span>
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex items-center gap-2 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200"
+                                >
+                                    <CheckCircle className="w-5 h-5 shrink-0" />
+                                    <span>Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.</span>
+                                </motion.div>
                             )}
 
                             {status === 'error' && (
-                                <div className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-lg">
-                                    <AlertCircle className="w-5 h-5" />
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200"
+                                >
+                                    <AlertCircle className="w-5 h-5 shrink-0" />
                                     <span>{errorMessage}</span>
-                                </div>
+                                </motion.div>
                             )}
 
                             <button
                                 type="submit"
                                 disabled={status === 'sending'}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white rounded-lg font-medium transition-colors shadow-lg shadow-primary-500/30"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors shadow-lg shadow-primary-500/30"
                             >
                                 {status === 'sending' ? (
                                     <>
